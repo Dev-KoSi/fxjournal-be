@@ -1,7 +1,10 @@
 const mongoose = require('mongoose');
 
-const journalSchema = new mongoose.Schema({
-    image: String,
+const logSchema = new mongoose.Schema({
+    image: {
+        url: String,
+        publicId: String
+    },
     caption: String,
     uploadedBy: {
         type: mongoose.Schema.Types.ObjectId,
@@ -10,4 +13,4 @@ const journalSchema = new mongoose.Schema({
     }
 }, {timestamps: true});
 
-module.exports = mongoose.model('Journal', journalSchema);
+module.exports = mongoose.model('Posts', journalSchema);
