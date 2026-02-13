@@ -6,11 +6,11 @@ const logSchema = new mongoose.Schema({
         publicId: String
     },
     caption: String,
-    uploadedBy: {
+    postedBy: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: User,
+        ref: 'User',
         require: true
     }
 }, {timestamps: true});
 
-module.exports = mongoose.model('Posts', journalSchema);
+module.exports = mongoose.model('Posts', logSchema);

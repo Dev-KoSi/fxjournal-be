@@ -23,13 +23,16 @@ const postLog = async (req, res) => {
                 publicId: publicId
             },
             caption,
-            uploadedBy: userId
+            postedBy: userId
         })
 
         if(newLog) {
             return res.status(200).json({
                 success: true,
-                message: 'Log posted successfully.'
+                message: 'Log posted successfully.',
+                image: newLog.image.url,
+                caption: newLog.caption,
+                postedBy: newLog.postedBy
             })
         } else {
             return res.status(401).json({
