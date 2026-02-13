@@ -47,7 +47,7 @@ const signUp = async (req, res) => {
             return res.status(200).json({
                 success : true,
                 message : `Account created successfully, log in.`,
-                user : newlyCreatedUser
+                user : newUser
             })
         } else {
             res.status(400).json({
@@ -66,7 +66,53 @@ const signUp = async (req, res) => {
     }
 }
 
-module.exports = {signUp}
+const logIn = async (req, res) => {
+    try {
+        const {email, password} = req.body;
+
+        const checkUser = await User.findOne({email});
+
+        if(!checkUser) {
+            return res.status(400).json({
+                success: false,
+                message : `User does not exist, sign up.`
+            })
+        }
+
+        const checkpassword = await bcrypt.compare(password, checkUser.password);
+
+        if(!checkpassword) {
+            return res.status(400).json({
+                success: false,
+                message: `Wrong password!`
+            })
+        }
+
+        const accessToken = await jwt.sign({
+            userId: checkUser._id,
+            email : checkUser.email
+        }, process.env.JWT_SECRET_KEY, {
+            expiresIn: '30d'
+        })
+
+        res.status(200).json({
+            success : true,
+            message : `Logged in successfully, you are welcome.`,
+            email : checkUser.email,
+            accessToken,
+            userId : checkUser._id
+        });
+        
+    } catch (error) {
+        res.status(500).json({
+            success : false,
+            message : `Something went wrong, please try again.`,
+            error : error
+        })
+    }
+}
+
+module.exports = {signUp, logIn}
 
 
 

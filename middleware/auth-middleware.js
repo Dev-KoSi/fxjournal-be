@@ -26,4 +26,6 @@ const authMiddleware = async (req, res, next) => {
             error : error
         });
     }
-}
+};
+
+module.exports = authMiddleware;
