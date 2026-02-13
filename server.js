@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const connectToDB = require('./config/db');
 const authRouter = require('./routers/auth-routes');
+const homeRouter = require('./routers/home-routes');
 
 const app = express();
 const port = process.env.PORT;
@@ -14,5 +15,6 @@ app.use(cors());
 app.use(express.json());
 
 app.use(`/${appName}`, authRouter);
+app.use(`/${appName}`, homeRouter);
 
 app.listen(port, () => console.log(`Server is now running Port ${port}`));
