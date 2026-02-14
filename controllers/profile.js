@@ -60,4 +60,36 @@ const updateBio = async (req, res) => {
     }
 }
 
-module.exports = {updateUsername, updateBio};
+const deleteUser = async (req, res) => {
+    try {
+        const userId = req.params.id;
+
+        const delUser = await User.findByIdAndDelete(userId);
+
+        if(delUser) {
+            return res.status(200).json({
+                success: true,
+                message: `User deleted successfully.`,
+                deletedUser: {
+                    email: delUser.email,
+                    username: delUser.username
+                }
+            })
+        } else {
+            return res.status(400).json({
+                success : false,
+                message : `Something went wrong, try again.`
+            })
+        }
+        
+    } catch (error) {
+        console.log(error);
+
+        res.status(500).json({
+            success : false,
+            message : `Something went wrong, try again.`
+        })
+    }
+}
+
+module.exports = {updateUsername, updateBio, deleteUser};
