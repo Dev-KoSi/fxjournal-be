@@ -4,7 +4,8 @@ const cors = require('cors');
 const connectToDB = require('./config/db');
 const authRouter = require('./routers/auth-routes');
 const homeRouter = require('./routers/home-routes');
-const imageRouter = require("./routers/posts-routes");
+const logRouter = require("./routers/posts-routes");
+const profileRouter = require('./routers/profile-routes');
 
 const app = express();
 const port = process.env.PORT;
@@ -17,6 +18,7 @@ app.use(express.json());
 
 app.use(`/${appName}`, authRouter);
 app.use(`/${appName}`, homeRouter);
-app.use(`/${appName}`, imageRouter);
+app.use(`/${appName}`, logRouter);
+app.use(`/${appName}`, profileRouter);
 
 app.listen(port, () => console.log(`Server is now running Port ${port}`));

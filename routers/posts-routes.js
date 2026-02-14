@@ -5,8 +5,8 @@ const {postLog, updateLog} = require('../controllers/post-log')
 
 const router = express.Router();
 
-router.post('/post/:id', authMiddleware, imageMiddleware, postLog);
+router.post('/post/log/:id', authMiddleware, imageMiddleware, postLog);
 
-router.put('/update/:id', authMiddleware, updateLog);
+router.put('/update/caption/:id', authMiddleware, updateLog);
 
 module.exports = router;
