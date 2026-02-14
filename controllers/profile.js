@@ -30,4 +30,34 @@ const updateUsername = async (req, res) => {
     }
 }
 
-module.exports = {updateUsername}
+const updateBio = async (req, res) => {
+    try {
+        const userId = req.params.id;
+        const {newBio} = req.body;
+
+        const updatedBio = await User.findByIdAndUpdate(userId, {bio: newBio}, {new: true});
+
+        if(updatedBio) {
+            return res.status(200).json({
+                success: true,
+                message: `Bio updated successfully.`,
+                newBio: updatedBio.bio
+            })
+        } else {
+            return res.status(400).json({
+                success : false,
+                message : `Something went wrong, try again.`
+            })
+        }
+        
+    } catch (error) {
+        console.log(error);
+
+        res.status(500).json({
+            success : false,
+            message : `Something went wrong, try again.`
+        })
+    }
+}
+
+module.exports = {updateUsername, updateBio};
