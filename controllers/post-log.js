@@ -8,7 +8,7 @@ const postLog = async (req, res) => {
         let url = null;
         let publicId = null;
 
-        if(req.file.path) {
+        if(req.file) {
             const result = await uploadToCloudinary(req.file.path);
 
             if(result) {
@@ -51,4 +51,34 @@ const postLog = async (req, res) => {
     }
 };
 
-module.exports = postLog;
+const updateLog = async (req, res) => {
+    try {
+        const logId = req.params.id;
+        const {newCaption} = req.body;
+
+        const updatedCaption = await Posts.findByIdAndUpdate(logId, {caption: newCaption}, {new: true});
+
+        if(updatedCaption) {
+            return res.status(200).json({
+                success: true,
+                message: `Caption updated successfully.`,
+                newCaption: updatedCaption.caption
+            })
+        } else {
+            res.status(400).json({
+                success : false,
+                message : `Something went wrong, try again.`
+            })
+        }
+
+    } catch (error) {
+        console.log(error);
+
+        res.status(500).json({
+            success : false,
+            message : `Something went wrong, try again.`
+        })
+    }
+}
+
+module.exports = {postLog, updateLog};
