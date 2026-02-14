@@ -6,6 +6,7 @@ const logSchema = new mongoose.Schema({
         publicId: String
     },
     caption: String,
+    fav: Boolean,
     postedBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
