@@ -99,6 +99,8 @@ const logIn = async (req, res) => {
             success : true,
             message : `Logged in successfully, you are welcome.`,
             email : checkUser.email,
+            username: checkUser.username,
+            bio: checkUser.bio,
             accessToken,
             userId : checkUser._id
         });

@@ -1,5 +1,5 @@
 const uploadToCloudinary = require('../config/cloudinaryHelper');
-const Posts = require('../model/log');
+const Logs = require('../model/log');
 
 const postLog = async (req, res) => {
     try {
@@ -17,7 +17,7 @@ const postLog = async (req, res) => {
             }
         }
 
-        const newLog = await Posts.create({
+        const newLog = await Logs.create({
             image: {
                 url: url,
                 publicId: publicId
@@ -52,12 +52,43 @@ const postLog = async (req, res) => {
     }
 };
 
+const getLogs = async (req, res) => {
+    try {
+        const {userId} = req.body;
+
+        const allLogs = await Logs.find({
+            loggedBy: userId
+        });
+
+        if(allLogs) {
+            return res.status(200).json({
+                success : true,
+                message : `Logs retrieved successfully!`,
+                allLogs : allLogs || null
+            });
+        } else {
+            return res.status(401).json({
+                success : false,
+                message : `Something went wrong, try again.`
+            });
+        }
+        
+    } catch (error) {
+        console.log(error);
+
+        res.status(500).json({
+            success : false,
+            message : `Something went wrong, try again.`
+        })
+    }
+}
+
 const updateLog = async (req, res) => {
     try {
         const logId = req.params.id;
         const {newCaption} = req.body;
 
-        const updatedCaption = await Posts.findByIdAndUpdate(logId, {caption: newCaption}, {new: true});
+        const updatedCaption = await Logs.findByIdAndUpdate(logId, {caption: newCaption}, {new: true});
 
         if(updatedCaption) {
             return res.status(200).json({
@@ -86,7 +117,7 @@ const updateFav = async (req, res) => {
     try {
         const logId = req.params.id;
 
-        const favLog = await Posts.findById(logId);
+        const favLog = await Logs.findById(logId);
 
         if(favLog) {
             favLog.fav = !favLog.fav;
@@ -115,4 +146,4 @@ const updateFav = async (req, res) => {
     }
 }
 
-module.exports = {postLog, updateLog, updateFav};
+module.exports = {postLog, updateLog, updateFav, getLogs};

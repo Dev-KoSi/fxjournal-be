@@ -7,11 +7,11 @@ const logSchema = new mongoose.Schema({
     },
     caption: String,
     fav: Boolean,
-    postedBy: {
+    loggedBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         require: true
     }
 }, {timestamps: true});
 
-module.exports = mongoose.model('Posts', logSchema);
+module.exports = mongoose.model('Logs', logSchema);
