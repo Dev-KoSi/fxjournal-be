@@ -113,6 +113,35 @@ const updateLog = async (req, res) => {
     }
 }
 
+const deleteLog = async (req, res) => {
+    try {
+        const {logId} = req.params.id;
+
+        const delLog = await Logs.findByIdAndDelete({logId});
+
+        if(delLog) {
+            return res.status(200).json({
+                success: true,
+                message: `log deleted successfully.`,
+                deletedLog: delLog._id
+            })
+        } else {
+            return res.status(400).json({
+                success : false,
+                message : `Something went wrong, try again.`
+            })
+        }
+        
+    } catch (error) {
+        console.log(error);
+
+        res.status(500).json({
+            success : false,
+            message : `Something went wrong, try again.`
+        })
+    }
+}
+
 const updateFav = async (req, res) => {
     try {
         const logId = req.params.id;
@@ -146,4 +175,4 @@ const updateFav = async (req, res) => {
     }
 }
 
-module.exports = {postLog, updateLog, updateFav, getLogs};
+module.exports = {postLog, updateLog, updateFav, getLogs, deleteLog};
