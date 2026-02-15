@@ -91,6 +91,8 @@ const updateFav = async (req, res) => {
         if(favLog) {
             favLog.fav = !favLog.fav;
 
+            await favLog.save();
+
             return res.status(200).json({
                 success: true,
                 message: favLog.fav == true ? `Log added to Favourite.` : favLog.fav == false ? `Log removed from Favourite` : ``

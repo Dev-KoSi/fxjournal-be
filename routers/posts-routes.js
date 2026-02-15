@@ -9,6 +9,6 @@ router.post('/post/log/:id', authMiddleware, imageMiddleware, postLog);
 
 router.put('/update/caption/:id', authMiddleware, updateLog);
 
-router.put('/update/fav/:id', authMiddleware, updateFav);
+router.patch('/update/fav/:id', authMiddleware, updateFav);
 
 module.exports = router;
