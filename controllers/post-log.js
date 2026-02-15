@@ -115,9 +115,9 @@ const updateLog = async (req, res) => {
 
 const deleteLog = async (req, res) => {
     try {
-        const {logId} = req.params.id;
+        const logId = req.params.id;
 
-        const delLog = await Logs.findByIdAndDelete({logId});
+        const delLog = await Logs.findByIdAndDelete(logId);
 
         if(delLog) {
             return res.status(200).json({
