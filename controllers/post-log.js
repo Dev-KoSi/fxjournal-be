@@ -23,6 +23,7 @@ const postLog = async (req, res) => {
                 publicId: publicId
             },
             caption,
+            fav: false,
             postedBy: userId
         })
 
@@ -81,4 +82,34 @@ const updateLog = async (req, res) => {
     }
 }
 
-module.exports = {postLog, updateLog};
+const updateFav = async (req, res) => {
+    try {
+        const logId = req.params.id;
+
+        const favLog = await Posts.findById(logId);
+
+        if(favLog) {
+            favLog.fav = !favLog.fav;
+
+            return res.status(200).json({
+                success: true,
+                message: favLog.fav == true ? `Log added to Favourite.` : favLog.fav == false ? `Log removed from Favourite` : ``
+            })
+        } else {
+            res.status(400).json({
+                success : false,
+                message : `Something went wrong, try again.`
+            })
+        }
+
+    } catch (error) {
+        console.log(error);
+
+        res.status(500).json({
+            success : false,
+            message : `Something went wrong, try again.`
+        })
+    }
+}
+
+module.exports = {postLog, updateLog, updateFav};
