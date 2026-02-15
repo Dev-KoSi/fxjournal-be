@@ -57,19 +57,19 @@ const getLogs = async (req, res) => {
         const {userId} = req.body;
 
         const allLogs = await Logs.find({
-            loggedBy: userId
+            postedBy: userId
         });
 
         if(allLogs) {
             return res.status(200).json({
-                success : true,
-                message : `Logs retrieved successfully!`,
-                allLogs : allLogs || null
+                succes : true,
+                message: `Logs retrieved successfully!`,
+                allLogs: allLogs || null
             });
         } else {
             return res.status(401).json({
-                success : false,
-                message : `Something went wrong, try again.`
+                success: false,
+                message: `Something went wrong, try again.`
             });
         }
         

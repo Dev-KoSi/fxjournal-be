@@ -7,7 +7,7 @@ const logSchema = new mongoose.Schema({
     },
     caption: String,
     fav: Boolean,
-    loggedBy: {
+    postedBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         require: true
