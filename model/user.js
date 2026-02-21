@@ -4,9 +4,9 @@ const userSchema = new mongoose.Schema({
     id: String,
     email: String,
     password: String,
-    username: String,
+    username: {type: String, default: 'user'},
     image: String,
-    bio: String
+    bio: {type: String, default: 'bio'}
 
 }, {timestamps: true});
 
