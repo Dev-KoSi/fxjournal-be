@@ -40,7 +40,9 @@ const signUp = async (req, res) => {
 
         const newUser = await User.create({
             email,
-            password: hashPassword
+            password: hashPassword,
+            username: 'user',
+            bio: 'bio'
         });
 
         if(newUser) {
