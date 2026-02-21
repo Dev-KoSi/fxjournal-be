@@ -4,11 +4,6 @@ const jwt = require('jsonwebtoken');
 const validator = require('validator');
 
 const signUp = async (req, res) => {
-    function isValidPassword(password) {
-        const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{6,}$/;
-        return passwordRegex.test(password);
-    }
-
     try {
         const {email, password} = req.body;
 
@@ -25,13 +20,6 @@ const signUp = async (req, res) => {
             return res.status(400).json({
                 success: false,
                 message: `User is already registered, log in.`
-            })
-        };
-
-        if(!isValidPassword(password)) {
-            return res.status(400).json({
-                success: false,
-                message: `Weak password!`
             })
         };
 
