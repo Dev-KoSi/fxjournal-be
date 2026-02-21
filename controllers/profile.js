@@ -42,7 +42,7 @@ const deleteUser = async (req, res) => {
         if(delUser) {
             return res.status(200).json({
                 success: true,
-                message: `User deleted successfully.`,
+                message: `Account deleted successfully.`,
                 deletedUser: {
                     email: delUser.email,
                     username: delUser.username
